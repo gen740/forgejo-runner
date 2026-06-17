@@ -1,18 +1,16 @@
-FROM ubuntu:24.04
+FROM nixos/nix:latest
 
 LABEL org.opencontainers.image.title="forgejo-runner"
-LABEL org.opencontainers.image.description="Minimal Ubuntu 24.04 image with Node.js for Forgejo Actions jobs"
+LABEL org.opencontainers.image.description="Minimal Nix-based image with Node.js for Forgejo Actions jobs"
 
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        bash \
-        ca-certificates \
-        curl \
-        git \
-        nodejs \
-        npm \
-    && rm -rf /var/lib/apt/lists/*
+RUN nix-channel --update \
+    && (nix-env -e git-minimal || true) \
+    && nix-env -iA \
+        nixpkgs.bash \
+        nixpkgs.cacert \
+        nixpkgs.coreutils \
+        nixpkgs.curl \
+        nixpkgs.git \
+        nixpkgs.nodejs_22
 
 CMD ["/bin/bash"]

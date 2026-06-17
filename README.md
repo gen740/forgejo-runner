@@ -1,6 +1,6 @@
 # forgejo-runner
 
-Minimal Ubuntu 24.04 image with Node.js for Forgejo Actions jobs.
+Minimal Nix-based image with Node.js for Forgejo Actions jobs.
 
 Published image:
 
@@ -10,13 +10,13 @@ docker pull ghcr.io/gen740/forgejo-runner:latest
 
 ## Included packages
 
-- Ubuntu 24.04
+- nixos/nix:latest
 - bash
-- ca-certificates
+- cacert
+- coreutils
 - curl
 - git
-- nodejs
-- npm
+- nodejs_22, including npm
 
 ## Forgejo usage
 
